@@ -56,36 +56,22 @@ const appJson = {
             subject: { locked: false, value: "영어" },
             translations: {
               locked: false,
-              value: [
-                {
-                  filePath: "",
-                  imgAlt: "",
-                  text: "여러분, 반갑습니다! 저는 진화생물학자 Edward Wilson 박사입니다. 오늘 초대해 주셔서 감사합니다. 오는 길에 이 장소를 찾는데 어려움을 겪었습니다. 다행히도 친절한 학생이 다가와서 여기로 데려다 줬어요. 이런 상황에서 우리가 도움이 필요한 사람을 돕고 싶어 한다는 건 신기한 일입니다. 그럼, 몇 가지 흥미로운 질문이 생깁니다. 우리의 다정함은 어디에서 오는 것이며, 왜 중요한 것일까요?",
-                },
-              ],
+              value: [{filePath: "",imgAlt: "",text: "여러분, 반갑습니숭구리당당! 저는 진화생물학자 Edward Wilson 박사입니다. 오늘 초대해 주셔서 감사합니다. 오는 길에 이 장소를 찾는데 어려움을 겪었습니다. 다행히도 친절한 학생이 다가와서 여기로 데려다 줬어요. 이런 상황에서 우리가 도움이 필요한 사람을 돕고 싶어 한다는 건 신기한 일입니다. 그럼, 몇 가지 흥미로운 질문이 생깁니다. 우리의 다정함은 어디에서 오는 것이며, 왜 중요한 것일까요?",},],
             },
             userSubmission: { locked: false },
             explanations: {
               locked: false,
-              value: [
-                {
-                  filePath: "",
-                  imgAlt: "",
-                  text: "‘~하는 데 어려움을 겪다’라는 의미를 나타내는 표현은 have trouble –ing이다. 따라서 2번의 locate를 locating으로 바꿔야 한다.",
-                },
-              ],
+              value: [{filePath: "",imgAlt: "",text: "뭐뭐하는 데 어려움을 겪다’라는 의미를 나타내는 표현은 have trouble –ing이다. 따라서 2번의 locate를 locating으로 바꿔야 한다.",},],
             },
             className: { locked: true },
             theme: { locked: false, value: "중고등" },
             correctAnswer: {
               locked: false,
-              value: [
-                { answer: "2", filePath: "", imgAlt: "", text: "however" },
-              ],
+              value: [{answer: "2", filePath: "", imgAlt: "", text: "니냐뇨"},],
             },
             scripts: {
               locked: false,
-              value: [{ english: "", translation: "" }],
+              value: [{ english: "", translation: ""}]
             },
             isCorrect: { locked: false },
           },
@@ -197,10 +183,7 @@ const appJson = {
             className: { locked: true },
             theme: { locked: false, value: "중고등" },
             value: {
-              locked: false,
-              value:
-                "다음 글의 밑줄 친 부분 중, 어법상 <u>틀린</u> 것을 고르시오.",
-            },
+              locked: false, value: "콤마테스트"},
             displayMode: { locked: false, value: false },
           },
         },
@@ -759,11 +742,11 @@ const appJson = {
             userSubmission: { locked: false },
             rowList: {
               locked: false,
-              value: [{textValue: "안녕", filePath: "", imgAlt: ""}, {textValue: "하세요", filePath: "", imgAlt: ""}, {textValue: "만나서", filePath: "", imgAlt: ""}, {textValue: "반가워요", filePath: "", imgAlt: ""}, {textValue: "악", filePath: "", imgAlt: ""}],
+              value: [{textValue: "333", filePath: "", imgAlt: ""}, {textValue: "테스트", filePath: "", imgAlt: ""}, {textValue: "옴뇸뇸", filePath: "", imgAlt: ""}, {textValue: "반가워요", filePath: "", imgAlt: ""}],
             },
             className: { locked: true },
             theme: { locked: false, value: "중고등" },
-            correctAnswer: { locked: false, value: 2 },
+            correctAnswer: { locked: false, value: "5" },
             direction: { locked: false, value: "vertical" },
           },
         },
@@ -1377,22 +1360,22 @@ const appJson = {
                 subject: { locked: false, value: "영어" },
                 translations: {
                   locked: false,
-                  value: [{ filePath: "", imgAlt: "", text: "" }],
+                  value: [{filePath: "",imgAlt: "",text: "여러분, 반갑습니숭구리당당! 저는 진화생물학자 Edward Wilson 박사입니다. 오늘 초대해 주셔서 감사합니다. 오는 길에 이 장소를 찾는데 어려움을 겪었습니다. 다행히도 친절한 학생이 다가와서 여기로 데려다 줬어요. 이런 상황에서 우리가 도움이 필요한 사람을 돕고 싶어 한다는 건 신기한 일입니다. 그럼, 몇 가지 흥미로운 질문이 생깁니다. 우리의 다정함은 어디에서 오는 것이며, 왜 중요한 것일까요?",},],
                 },
                 userSubmission: { locked: false },
                 explanations: {
                   locked: false,
-                  value: [{ filePath: "", imgAlt: "", text: "" }],
+                  value: [{filePath: "",imgAlt: "",text: "뭐뭐하는 데 어려움을 겪다’라는 의미를 나타내는 표현은 have trouble –ing이다. 따라서 2번의 locate를 locating으로 바꿔야 한다.",},],
                 },
                 className: { locked: true },
                 theme: { locked: false, value: "중고등" },
                 correctAnswer: {
                   locked: false,
-                  value: [{ answer: "", filePath: "", imgAlt: "", text: "" }],
+                  value: [{answer: "2", filePath: "", imgAlt: "", text: "니냐뇨"},],
                 },
                 scripts: {
                   locked: false,
-                  value: [{ english: "", translation: "" }],
+                  value: [{ english: "", translation: ""}]
                 },
                 isCorrect: { locked: false },
               },
@@ -1455,11 +1438,11 @@ const appJson = {
                 userSubmission: { locked: false },
                 rowList: {
                   locked: false,
-                  value: [{textValue: "안녕", filePath: "", imgAlt: ""}, {textValue: "하세요", filePath: "", imgAlt: ""}, {textValue: "만나서", filePath: "", imgAlt: ""}, {textValue: "반가워요", filePath: "", imgAlt: ""}, {textValue: "악", filePath: "", imgAlt: ""}],
+                  value: [{textValue: "333", filePath: "", imgAlt: ""}, {textValue: "테스트", filePath: "", imgAlt: ""}, {textValue: "옴뇸뇸", filePath: "", imgAlt: ""}, {textValue: "반가워요", filePath: "", imgAlt: ""}],
                 },
                 className: { locked: true },
                 theme: { locked: false, value: "중고등" },
-                correctAnswer: { locked: false },
+                correctAnswer: { locked: false, value: "5" },
                 direction: { locked: false, value: "vertical" },
               },
             },
@@ -1567,7 +1550,7 @@ const appJson = {
                 subject: { locked: false, value: "영어" },
                 className: { locked: true },
                 theme: { locked: false, value: "중고등" },
-                value: { locked: false },
+                value: { locked: false, value: "콤마테스트"},
                 displayMode: { locked: false, value: false },
               },
             },
