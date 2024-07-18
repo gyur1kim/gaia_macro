@@ -13,13 +13,6 @@ app_file_js = f'{FILE_PATH}app-{FILE_ID}.js'
 with open(app_file_js, 'r', encoding='utf-8') as file:
     content = file.read()
 
-
-# 선지 변경
-op_row_list = '[{textValue: "1", filePath: "", imgAlt: ""}, {textValue: "2", filePath: "", imgAlt: ""}, {textValue: "3", filePath: "", imgAlt: ""}, {textValue: "4", filePath: "", imgAlt: ""}, {textValue: "5", filePath: "", imgAlt: ""}]'
-op_answer = '\"5\"'
-op_pattern = r'("?name"?:\s?"0716_op2 66"[\s\S]*?rowList"?:\s?{[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}[\s\S]*?correctAnswer"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
-op_replacement = fr'\1{op_row_list}\2, value: {op_answer}\3'
-
 # 텍스트0 변경
 text0_value = '\"텍스트0\"'
 text0_pattern = r'("?name"?:\s?"0711_text1 19"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
@@ -72,16 +65,21 @@ ex2_value = '\"보기2\"'
 ex2_pattern = r'("?name"?:\s?"0711_ex2 12"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
 ex2_replacement = fr'\1, value: {ex2_value}\2'
 
+# 선지 변경
+op_row_list = '[{textValue: "1", filePath: "", imgAlt: ""}, {textValue: "2", filePath: "", imgAlt: ""}, {textValue: "3", filePath: "", imgAlt: ""}, {textValue: "4", filePath: "", imgAlt: ""}, {textValue: "5", filePath: "", imgAlt: ""}]'
+op_answer = '\"5\"'
+op_pattern = r'("?name"?:\s?"0716_op2 66"[\s\S]*?rowList"?:\s?{[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}[\s\S]*?correctAnswer"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+op_replacement = fr'\1{op_row_list}\2, value: {op_answer}\3'
 
 # frame
 frame_translations = '[{filePath: "",imgAlt: "",text: "여기는 해석이 옵니다.",},]'
 frame_explanations = '[{filePath: "",imgAlt: "",text: "여기는 해설이 옵니다.",},]'
 frame_correct_answer = '[{answer: "5", filePath: "", imgAlt: "", text: "5"},]'
 frame_scripts = '[{ english: "", translation: ""}]'
-frame_pattern = r'("?name"?: "kgr_240716_frame3 57",[\s\S]*?translations"?:[\s\S]*?value"?: )\[[\s\S]*?\](,[\s\S]*?explanations"?:[\s\S]*?value"?: )\[[\s\S]*?\](,[\s\S]*?correctAnswer"?:[\s\S]*?value"?: )\[[\s\S]*?\](,[\s\S]*?scripts"?:[\s\S]*?value"?: )\[[\s\S]*?\](,)'
+frame_pattern = r'(name"?:\s?"kgr_240716_frame3 57",[\s\S]*?translations"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?},[\s\S]*?explanations"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?},[\s\S]*?correctAnswer"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?},[\s\S]*?scripts"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?},)'
 frame_replacement = fr'\1{frame_translations}\2{frame_explanations}\3{frame_correct_answer}\4{frame_scripts}\5'
 
-content = re.sub(op_pattern, op_replacement, content, flags=re.DOTALL)
+content = re.sub(frame_pattern, frame_replacement, content, flags=re.DOTALL)
 content = re.sub(text0_pattern, text0_replacement, content, flags=re.DOTALL)
 content = re.sub(audio0_pattern, audio0_replacement, content, flags=re.DOTALL)
 content = re.sub(text1_pattern, text1_replacement, content, flags=re.DOTALL)
@@ -92,7 +90,7 @@ content = re.sub(text2_pattern, text2_replacement, content, flags=re.DOTALL)
 content = re.sub(img2_pattern, img2_replacement, content, flags=re.DOTALL)
 content = re.sub(box2_pattern, box2_replacement, content, flags=re.DOTALL)
 content = re.sub(ex2_pattern, ex2_replacement, content, flags=re.DOTALL)
-content = re.sub(frame_pattern, frame_replacement, content, flags=re.DOTALL)
+content = re.sub(op_pattern, op_replacement, content, flags=re.DOTALL)
 
 # 파일 저장
 with open(app_file_js, 'w', encoding='utf-8') as file:
