@@ -4,36 +4,94 @@ import os
 import zipfile
 
 FILE_PATH = 'C:/Users/qri/Desktop/gaia_macro/'
+FILE_ID = '1721208887818'
 
 # 파일 경로 설정
-app_file_js = f'{FILE_PATH}app-1721208887818.js'
+app_file_js = f'{FILE_PATH}app-{FILE_ID}.js'
 
 # 파일 읽기
 with open(app_file_js, 'r', encoding='utf-8') as file:
     content = file.read()
 
 
-# 정규 표현식을 사용하여 선지 변경
-op2_row_list = '[{textValue: "333", filePath: "", imgAlt: ""}, {textValue: "테스트", filePath: "", imgAlt: ""}, {textValue: "옴뇸뇸", filePath: "", imgAlt: ""}, {textValue: "반가워요", filePath: "", imgAlt: ""}]'
-op2_answer = '\"5\"'
-op2_pattern = r'(name: "0716_op2 66",[\s\S]*?rowList:[\s\S]*?value: )\[[\s\S]*?\](,[\s\S]*?correctAnswer: \{ locked: false)[\s\S]*?(\s*\},)'
-op2_replacement = fr'\1{op2_row_list}\2, value: {op2_answer}\3'
+# 선지 변경
+op_row_list = '[{textValue: "1", filePath: "", imgAlt: ""}, {textValue: "2", filePath: "", imgAlt: ""}, {textValue: "3", filePath: "", imgAlt: ""}, {textValue: "4", filePath: "", imgAlt: ""}, {textValue: "5", filePath: "", imgAlt: ""}]'
+op_answer = '\"5\"'
+op_pattern = r'("?name"?:\s?"0716_op2 66"[\s\S]*?rowList"?:\s?{[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}[\s\S]*?correctAnswer"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+op_replacement = fr'\1{op_row_list}\2, value: {op_answer}\3'
 
-# 정규 표현식을 사용하여 텍스트1 변경
-text1_value = '\"콤마테스트\"'
-text1_pattern = r'(name: "0711_text1 19",[\s\S]*?content:[\s\S]*?theme:[\s\S]*?value:[\s\S]*?value: {[\s\S]*?locked: false)[\s\S]*?(},)'
+# 텍스트0 변경
+text0_value = '\"텍스트0\"'
+text0_pattern = r'("?name"?:\s?"0711_text1 19"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+text0_replacement = fr'\1, value: {text0_value}\2'
+
+# 오디오0 변경
+audio0_value = '\"APP_ID/오디오파일명.mp4\"'
+audio0_pattern = r'("?name"?:\s?"kgr_240716_audio3 65"[\s\S]*?content"?:\s?{[\s\S]*?filePath"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+audio0_replacement = fr'\1, value: {audio0_value}\2'
+
+# 텍스트1 변경
+text1_value = '\"텍스트1\"'
+text1_pattern = r'("?name"?:\s?"0711_text1 63"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
 text1_replacement = fr'\1, value: {text1_value}\2'
 
-# frame
-frame_translations = '[{filePath: "",imgAlt: "",text: "여러분, 반갑습니숭구리당당! 저는 진화생물학자 Edward Wilson 박사입니다. 오늘 초대해 주셔서 감사합니다. 오는 길에 이 장소를 찾는데 어려움을 겪었습니다. 다행히도 친절한 학생이 다가와서 여기로 데려다 줬어요. 이런 상황에서 우리가 도움이 필요한 사람을 돕고 싶어 한다는 건 신기한 일입니다. 그럼, 몇 가지 흥미로운 질문이 생깁니다. 우리의 다정함은 어디에서 오는 것이며, 왜 중요한 것일까요?",},]'
-frame_explanations = '[{filePath: "",imgAlt: "",text: "뭐뭐하는 데 어려움을 겪다’라는 의미를 나타내는 표현은 have trouble –ing이다. 따라서 2번의 locate를 locating으로 바꿔야 한다.",},]'
-frame_correct_answer = '[{answer: "2", filePath: "", imgAlt: "", text: "니냐뇨"},]'
-frame_scripts = '[{ english: "", translation: ""}]'
-frame_pattern = r'(name: "kgr_240716_frame3 57",[\s\S]*?translations:[\s\S]*?value: )\[[\s\S]*?\](,[\s\S]*?explanations:[\s\S]*?value: )\[[\s\S]*?\](,[\s\S]*?correctAnswer:[\s\S]*?value: )\[[\s\S]*?\](,[\s\S]*?scripts:[\s\S]*?value: )\[[\s\S]*?\](,)'
-frame_replacement = fr'\1{frame_translations}\2{frame_explanations}\3{frame_correct_answer}\4{frame_scripts}'
+# 이미지1 변경
+img1_filePath = '\"APP_ID/어쩌구.jpg\"'
+img1_imgAlt = '\"대체텍스트\"'
+img1_pattern = r'("?name"?:\s?"kgr_240716_img2 69"[\s\S]*?content"?:\s?{[\s\S]*?filePath"?:\s?{[\s\S]*?false)[\s\S]*?(},[\s\S]*?imgAlt"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+img1_replacement = fr'\1, filePath: {img1_filePath} \2, imgAlt: {img1_imgAlt}\3'
 
-content = re.sub(op2_pattern, op2_replacement, content, flags=re.DOTALL)
+# 박스1 변경
+box1_value = '\"박스1\"'
+box1_pattern = r'("?name"?:\s?"0711_box1 13"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+box1_replacement = fr'\1, value: {box1_value}\2'
+
+# 보기박스1 변경
+ex1_value = '\"보기1\"'
+ex1_pattern = r'("?name"?:\s?"0711_ex2 11"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+ex1_replacement = fr'\1, value: {ex1_value}\2'
+
+# 텍스트2 변경
+text2_value = '\"텍스트2\"'
+text2_pattern = r'("?name"?:\s?"0711_text1 64"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+text2_replacement = fr'\1, value: {text2_value}\2'
+
+# 이미지2 변경
+img2_filePath = '\"APP_ID/어쩌구.jpg\"'
+img2_imgAlt = '\"대체텍스트\"'
+img2_pattern = r'("?name"?:\s?"kgr_240716_img2 70"[\s\S]*?content"?:\s?{[\s\S]*?filePath"?:\s?{[\s\S]*?false)[\s\S]*?(},[\s\S]*?imgAlt"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+img2_replacement = fr'\1, filePath: {img2_filePath} \2, imgAlt: {img2_imgAlt}\3'
+
+# 박스2 변경
+box2_value = '\"박스2[!\frac{3}{2}!] [!\\frac{3}{2}!]\"'
+box2_pattern = r'("?name"?:\s?"0711_box1 14"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+box2_replacement = fr'\1, value: {box2_value}\2'
+
+# 보기박스2 변경
+ex2_value = '\"보기2\"'
+ex2_pattern = r'("?name"?:\s?"0711_ex2 12"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
+ex2_replacement = fr'\1, value: {ex2_value}\2'
+
+
+# frame
+frame_translations = '[{filePath: "",imgAlt: "",text: "여기는 해석이 옵니다.",},]'
+frame_explanations = '[{filePath: "",imgAlt: "",text: "여기는 해설이 옵니다.",},]'
+frame_correct_answer = '[{answer: "5", filePath: "", imgAlt: "", text: "5"},]'
+frame_scripts = '[{ english: "", translation: ""}]'
+frame_pattern = r'("?name"?: "kgr_240716_frame3 57",[\s\S]*?translations"?:[\s\S]*?value"?: )\[[\s\S]*?\](,[\s\S]*?explanations"?:[\s\S]*?value"?: )\[[\s\S]*?\](,[\s\S]*?correctAnswer"?:[\s\S]*?value"?: )\[[\s\S]*?\](,[\s\S]*?scripts"?:[\s\S]*?value"?: )\[[\s\S]*?\](,)'
+frame_replacement = fr'\1{frame_translations}\2{frame_explanations}\3{frame_correct_answer}\4{frame_scripts}\5'
+
+content = re.sub(op_pattern, op_replacement, content, flags=re.DOTALL)
+content = re.sub(text0_pattern, text0_replacement, content, flags=re.DOTALL)
+content = re.sub(audio0_pattern, audio0_replacement, content, flags=re.DOTALL)
 content = re.sub(text1_pattern, text1_replacement, content, flags=re.DOTALL)
+content = re.sub(img1_pattern, img1_replacement, content, flags=re.DOTALL)
+content = re.sub(box1_pattern, box1_replacement, content, flags=re.DOTALL)
+content = re.sub(ex1_pattern, ex1_replacement, content, flags=re.DOTALL)
+content = re.sub(text2_pattern, text2_replacement, content, flags=re.DOTALL)
+content = re.sub(img2_pattern, img2_replacement, content, flags=re.DOTALL)
+content = re.sub(box2_pattern, box2_replacement, content, flags=re.DOTALL)
+content = re.sub(ex2_pattern, ex2_replacement, content, flags=re.DOTALL)
 content = re.sub(frame_pattern, frame_replacement, content, flags=re.DOTALL)
 
 # 파일 저장
@@ -44,11 +102,11 @@ print("파일이 성공적으로 업데이트되었습니다.")
 
 # 여러 JS 파일을 ZIP 파일로 압축
 js_files = [
-    f"{FILE_PATH}app-1721208887818.js",
-    f"{FILE_PATH}GlobalConfig-1721208887818.js",
-    f"{FILE_PATH}import-libraries-1721208887818.js",
-    f"{FILE_PATH}index.html",
-    f"{FILE_PATH}runner-1721208887818.js",
+    f"{FILE_PATH}app-{FILE_ID}.js",
+    f"{FILE_PATH}GlobalConfig-{FILE_ID}.js",
+    f"{FILE_PATH}import-libraries-{FILE_ID}.js",
+    f"{FILE_PATH}7818index.html",
+    f"{FILE_PATH}runner-{FILE_ID}.js",
     f"{FILE_PATH}SUIT-Bold.ttf"
 ]
 
