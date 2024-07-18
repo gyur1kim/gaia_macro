@@ -4,7 +4,7 @@ import os
 import zipfile
 
 FILE_PATH = 'C:/Users/qri/Desktop/gaia_macro/'
-FILE_ID = '1721316601086'
+FILE_ID = '1721208887818'
 
 # 파일 경로 설정
 app_file_js = f'{FILE_PATH}app-{FILE_ID}.js'
@@ -14,7 +14,7 @@ with open(app_file_js, 'r', encoding='utf-8') as file:
     content = file.read()
 
 # 텍스트0 변경
-text0_value = '1086'
+text0_value = '7818'
 text0_pattern = r'("?name"?:\s?"0711_text1 19"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
 text0_replacement = fr'\1, "value": "{text0_value}"\2'
 
@@ -24,7 +24,7 @@ audio0_pattern = r'("?name"?:\s?"kgr_240716_audio3 65"[\s\S]*?content"?:\s?{[\s\
 audio0_replacement = fr'\1, "value": "{audio0_value}"\2'
 
 # 텍스트1 변경
-text1_value = '텍스트1'
+text1_value = '얍 바뀌어라'
 text1_pattern = r'("?name"?:\s?"0711_text1 63"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
 text1_replacement = fr'\1, "value": "{text1_value}"\2'
 
@@ -35,7 +35,7 @@ img1_pattern = r'("?name"?:\s?"kgr_240716_img2 69"[\s\S]*?content"?:\s?{[\s\S]*?
 img1_replacement = fr'\1, "filePath": "{img1_filePath}" \2, "imgAlt": "{img1_imgAlt}"\3'
 
 # 박스1 변경
-box1_value = '박스1'
+box1_value = r'박스1 [!\\\\frac{2}{3} \\\\sqrt{2}!]'
 box1_pattern = r'("?name"?:\s?"0711_box1 13"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},?[\s\S]*?},?)'
 box1_replacement = fr'\1, "value": "{box1_value}"\2'
 
@@ -66,7 +66,7 @@ ex2_pattern = r'("?name"?:\s?"0711_ex2 12"[\s\S]*?content"?:\s?{[\s\S]*?value"?:
 ex2_replacement = fr'\1, "value": "{ex2_value}"\2'
 
 # 선지 변경
-op_row_list = '[{"textValue": "1", "filePath": "", "imgAlt": ""}, {"textValue": "2", "filePath": "", "imgAlt": ""}, {"textValue": "3", "filePath": "", "imgAlt": ""}, {"textValue": "4", "filePath": "", "imgAlt": ""}, {"textValue": "5", "filePath": "", "imgAlt": ""}]'
+op_row_list = r'[{"textValue": "[!\\\\sqrt{300}!]", "filePath": "", "imgAlt": ""}, {"textValue": "2", "filePath": "", "imgAlt": ""}, {"textValue": "3", "filePath": "", "imgAlt": ""}, {"textValue": "4", "filePath": "", "imgAlt": ""}, {"textValue": "5", "filePath": "", "imgAlt": ""}]'
 op_answer = '5'
 op_pattern = r'("?name"?:\s?"0716_op2 66"[\s\S]*?rowList"?:\s?{[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}[\s\S]*?correctAnswer"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
 op_replacement = fr'\1{op_row_list}\2, "value": {op_answer}\3'
@@ -103,13 +103,13 @@ js_files = [
     f"{FILE_PATH}app-{FILE_ID}.js",
     f"{FILE_PATH}GlobalConfig-{FILE_ID}.js",
     f"{FILE_PATH}import-libraries-{FILE_ID}.js",
-    f"{FILE_PATH}1086index.html",
+    f"{FILE_PATH}7818index.html",
     f"{FILE_PATH}runner-{FILE_ID}.js",
     f"{FILE_PATH}SUIT-Bold.ttf"
 ]
 
 # 압축 파일 이름
-zip_filename = f'{FILE_PATH}1086.zip'
+zip_filename = f'{FILE_PATH}7818.zip'
 
 # zip 파일 생성 및 파일 추가
 with zipfile.ZipFile(zip_filename, 'w') as zipf:
