@@ -34,7 +34,7 @@ for OPTION_FILE in OPTION_FILES_ORIGIN:
 
 
 # 컴포넌트명
-FRANE_COMP_NAME = 'kgr_240719_frame2 65'
+FRAME_COMP_NAME = 'kgr_240719_frame2 65'
 
 TEXT0_COMP_NAME = '0711_text1 59'
 AUDIO_COMP_NAME = 'kgr_240716_audio3 69'
@@ -49,10 +49,7 @@ EX2_COMP_NAME = '0711_ex2 10'
 
 OP_COMP_NAME = '0719_op 86'
 
-# 과목
-SUBJECT = '영어'
-THEME = '중고등'
-MATH_INPUTTER_SUBJECT = '초등' #(초등, 중등, 고등)
+
 
 # 파일 경로 설정
 OP_APP_FILE_NAME = f'{WORK_FOLDER_PATH}app-{FILE_ID}.js'
@@ -61,74 +58,90 @@ OP_APP_FILE_NAME = f'{WORK_FOLDER_PATH}app-{FILE_ID}.js'
 with open(OP_APP_FILE_NAME, 'r', encoding='utf-8') as FILE:
     OP_APP_FILE = FILE.read()
 
+OP_TYPE = 'text' # text, image
+
 # 텍스트0 변경
 text0_value = r''
-text0_pattern = fr'("name":"{TEXT0_COMP_NAME}"[\s\S]*?"content":{{"subject":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"theme":[\s\S]*?"value":)[\s\S]*?(}},"value":{{[\s\S]*?false)[\s\S]*?(}},)'
-text0_replacement = fr'\1 "{SUBJECT}" \2 "{THEME}" \3, "value": "{text0_value}"\4'
+text0_pattern = fr'("name":"{TEXT0_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
+text0_replacement = fr'\1, "value": "{text0_value}"\2'
 
 # 오디오0 변경
-audio0_value = ''
-audio0_pattern = fr'("?name"?:\s?"{AUDIO_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?filePath"?:\s?{{[\s\S]*?false)[\s\S]*?(}},)'
-audio0_replacement = fr'\1, "value": "{audio0_value}"\2'
+audio_value = ''
+audio_pattern = fr'("name":"{AUDIO_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},)'
+audio_replacement = fr'\1, "value": "{audio_value}"\2'
 
 # 텍스트1 변경
-text1_value = r''
-text1_pattern = fr'("name":"{TEXT1_COMP_NAME}"[\s\S]*?"content":{{"subject":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"theme":[\s\S]*?"value":)[\s\S]*?(}},"value":{{[\s\S]*?false)[\s\S]*?(}},)'
-text1_replacement = fr'\1 "{SUBJECT}" \2 "{THEME}" \3, "value": "{text1_value}"\4'
+text1_value = r'text1 [!\\\\sqrt{2}!]'
+text1_pattern = fr'("name":"{TEXT1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
+text1_replacement = fr'\1, "value": "{text1_value}"\2'
 
 # 이미지1 변경
 img1_filePath = ''
 img1_imgAlt = ''
-img1_pattern = fr'("?name"?:\s?"{IMG1_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?filePath"?:\s?{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt"?:\s?{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?}},?)'
+img1_pattern = fr'("name":"{IMG1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt":{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?)'
 img1_replacement = fr'\1, "filePath": "{img1_filePath}" \2, "imgAlt": "{img1_imgAlt}"\3'
 
 # 박스1 변경
 box1_value = r''
-box1_pattern = fr'("?name"?:\s?"{BOX1_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?}},?)'
+box1_pattern = fr'("name":"{BOX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
 box1_replacement = fr'\1, "value": "{box1_value}"\2'
 
 # 보기박스1 변경
 ex1_value = r''
-ex1_pattern = fr'("?name"?:\s?"{EX1_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?}},?)'
+ex1_pattern = fr'("name":"{EX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
 ex1_replacement = fr'\1, "value": "{ex1_value}"\2'
 
 # 텍스트2 변경
 text2_value = r''
-text2_pattern = fr'("name":"{TEXT2_COMP_NAME}"[\s\S]*?"content":{{"subject":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"theme":[\s\S]*?"value":)[\s\S]*?(}},"value":{{[\s\S]*?false)[\s\S]*?(}},)'
-text2_replacement = fr'\1 "{SUBJECT}" \2 "{THEME}" \3, "value": "{text2_value}"\4'
+text2_pattern = fr'("name":"{TEXT2_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
+text2_replacement = fr'\1, "value": "{text2_value}"\2'
 
 # 이미지2 변경
 img2_filePath = ''
 img2_imgAlt = ''
-img2_pattern = fr'("?name"?:\s?"{IMG2_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?filePath"?:\s?{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt"?:\s?{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?}},?)'
+img2_pattern = fr'("name":"{IMG2_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt":{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?)'
 img2_replacement = fr'\1, "filePath": "{img2_filePath}" \2, "imgAlt": "{img2_imgAlt}"\3'
 
 # 박스2 변경
 box2_value = r''
-box2_pattern = fr'("?name"?:\s?"{BOX2_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?}},?)'
+box2_pattern = fr'("name":"{BOX2_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
 box2_replacement = fr'\1, "value": "{box2_value}"\2'
 
 # 보기박스2 변경
 ex2_value = r''
-ex2_pattern = fr'("?name"?:\s?"{EX2_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?}},?)'
+ex2_pattern = fr'("name":"{EX2_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
 ex2_replacement = fr'\1, "value": "{ex2_value}"\2'
 
 # 선지 변경
-op_row_list = r'[]'
+op_row_list = r'[{"textValue":"","filePath":"","imgAlt":""}]'
 op_answer = '1'
-op_pattern = fr'("?name"?:\s?"{OP_COMP_NAME}"[\s\S]*?rowList"?:\s?{{[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}}[\s\S]*?correctAnswer"?:\s?{{[\s\S]*?false)[\s\S]*?(}},)'
-op_replacement = fr'\1{op_row_list}\2, "value": {op_answer}\3'
+op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
+op_replacement = fr'\1 "{OP_TYPE}" \2 {op_row_list} \3, "value": "{op_answer}" \4'
 
 # frame
 frame_translations = r'[{"filePath": "","imgAlt": "","text": "여기는 해석이 옵니다.",},]'
 frame_explanations = r'[{"filePath": "","imgAlt": "","text": "여기는 해설이 옵니다.",},]'
 frame_correct_answer = r'[{"answer": "1", "filePath": "", "imgAlt": "", "text": "5"},]'
-frame_scripts = r'[{ "english": "", "translation": ""}]'
-frame_pattern = fr'(name"?:\s?"{FRANE_COMP_NAME}",[\s\S]*?translations"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}},[\s\S]*?explanations"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}},[\s\S]*?correctAnswer"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}},[\s\S]*?scripts"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}},)'
-frame_replacement = fr'\1{frame_translations}\2{frame_explanations}\3{frame_correct_answer}\4{frame_scripts}\5'
+frame_scripts = r'[{ "english": "A: hi", "translation": ""}]'
+frame_pattern = fr'(name":"{FRAME_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"translations":[\s\S]*?"value":)\[[\s\S]*?\](}}[\s\S]*?"explanations":[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?correctAnswer":[\s\S]*?"value":)\[[\s\S]*?\](}}[\s\S]*?"scripts":[\s\S]*?value":)\[[\s\S]*?\](}})'
+frame_replacement = fr'\1 {frame_translations} \2 {frame_explanations} \3 {frame_correct_answer} \4 {frame_scripts}\5'
+
+# 과목 바꾸기
+SUBJECT = '영어'
+THEME = '중고등'
+
+subject_pattern = r'("subject":{"locked":false,"value":)[\s\S]*?(})'
+subject_replacement = fr'\1"{SUBJECT}"\2'
+theme_pattern = r'("theme":{"locked":false,"value":)[\s\S]*?(})'
+theme_replacement = fr'\1"{THEME}"\2'
+
+
+# 과목/학년 변경
+OP_APP_FILE = re.sub(subject_pattern, subject_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(theme_pattern, theme_replacement, OP_APP_FILE, flags=re.DOTALL)
 
 OP_APP_FILE = re.sub(text0_pattern, text0_replacement, OP_APP_FILE, flags=re.DOTALL)
-OP_APP_FILE = re.sub(audio0_pattern, audio0_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(audio_pattern, audio_replacement, OP_APP_FILE, flags=re.DOTALL)
 
 OP_APP_FILE = re.sub(text1_pattern, text1_replacement, OP_APP_FILE, flags=re.DOTALL)
 OP_APP_FILE = re.sub(img1_pattern, img1_replacement, OP_APP_FILE, flags=re.DOTALL)
