@@ -32,8 +32,14 @@ for OPTION_FILE in OPTION_FILES_ORIGIN:
     except Exception as e:
         print(f"파일 복사 중 오류가 발생했습니다: {e}")
 
+# 파일 경로 설정
+OP_APP_FILE_NAME = f'{WORK_FOLDER_PATH}app-{FILE_ID}.js'
 
-# 컴포넌트명
+# 파일 읽기
+with open(OP_APP_FILE_NAME, 'r', encoding='utf-8') as FILE:
+    OP_APP_FILE = FILE.read()
+
+# 가이아 컴포넌트명
 FRAME_COMP_NAME = 'kgr_240719_frame2 65'
 
 TEXT0_COMP_NAME = '0711_text1 59'
@@ -49,19 +55,11 @@ EX2_COMP_NAME = '0711_ex2 10'
 
 OP_COMP_NAME = '0719_op 86'
 
-
-
-# 파일 경로 설정
-OP_APP_FILE_NAME = f'{WORK_FOLDER_PATH}app-{FILE_ID}.js'
-
-# 파일 읽기
-with open(OP_APP_FILE_NAME, 'r', encoding='utf-8') as FILE:
-    OP_APP_FILE = FILE.read()
-
 OP_TYPE = 'text' # text, image
 
 # 텍스트0 변경
-text0_value = r''
+# 수식 넣을 때 \ => \\\\로 넣어줘야됨 ;;
+text0_value = r'등식의 성질을 이용하여 방정식 [! \\\\cfrac{2 x - 3}{5} = - 1 !]의 해를 구하는 과정이다. 이용된 등식의 성질을 순서대로 <보기>에서 찾아 나열하면?'
 text0_pattern = fr'("name":"{TEXT0_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
 text0_replacement = fr'\1, "value": "{text0_value}"\2'
 
@@ -71,12 +69,12 @@ audio_pattern = fr'("name":"{AUDIO_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"fileP
 audio_replacement = fr'\1, "value": "{audio_value}"\2'
 
 # 텍스트1 변경
-text1_value = r'text1 [!\\\\sqrt{2}!]'
+text1_value = r''
 text1_pattern = fr'("name":"{TEXT1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
 text1_replacement = fr'\1, "value": "{text1_value}"\2'
 
 # 이미지1 변경
-img1_filePath = ''
+img1_filePath = '15027/20514768_000.png'
 img1_imgAlt = ''
 img1_pattern = fr'("name":"{IMG1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt":{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?)'
 img1_replacement = fr'\1, "filePath": "{img1_filePath}" \2, "imgAlt": "{img1_imgAlt}"\3'
@@ -87,7 +85,7 @@ box1_pattern = fr'("name":"{BOX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":
 box1_replacement = fr'\1, "value": "{box1_value}"\2'
 
 # 보기박스1 변경
-ex1_value = r''
+ex1_value = r'[! a , b , c !]에 대하여 [! a = b , c \\\\geq 1 !]이면<br/>ㄱ. [! a + c = b + c !]<br/>ㄴ. [! a - c = b - c !]<br/>ㄷ. [! ac = bc !]<br/>ㄹ. [! \\\\cfrac{a}{c} = \\\\cfrac{b}{c} !]'
 ex1_pattern = fr'("name":"{EX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
 ex1_replacement = fr'\1, "value": "{ex1_value}"\2'
 
@@ -113,21 +111,21 @@ ex2_pattern = fr'("name":"{EX2_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{
 ex2_replacement = fr'\1, "value": "{ex2_value}"\2'
 
 # 선지 변경
-op_row_list = r'[{"textValue":"","filePath":"","imgAlt":""}]'
-op_answer = '1'
+op_row_list = r'[{"textValue":"ㄴ,ㄱ,ㄷ","filePath":"","imgAlt":""},{"textValue":"ㄷ,ㄱ,ㄹ","filePath":"","imgAlt":""},{"textValue":"ㄷ,ㄴ,ㄹ","filePath":"","imgAlt":""},{"textValue":"ㄹ,ㄱ,ㄷ","filePath":"","imgAlt":""},{"textValue":"ㄹ,ㄴ,ㄷ","filePath":"","imgAlt":""}]'
+op_answer = '2'
 op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
 op_replacement = fr'\1 "{OP_TYPE}" \2 {op_row_list} \3, "value": "{op_answer}" \4'
 
 # frame
-frame_translations = r'[{"filePath": "","imgAlt": "","text": "여기는 해석이 옵니다.",},]'
-frame_explanations = r'[{"filePath": "","imgAlt": "","text": "여기는 해설이 옵니다.",},]'
-frame_correct_answer = r'[{"answer": "1", "filePath": "", "imgAlt": "", "text": "5"},]'
-frame_scripts = r'[{ "english": "A: hi", "translation": ""}]'
+frame_translations = r'[{"filePath": "","imgAlt": "","text": "",},]'
+frame_explanations = r'[{"filePath": "","imgAlt": "","text": "[! \\\\cfrac{2 x - 3}{5} = - 1 !]의 양변에 [!5!]를 곱하면 [! \\\\cdots  !][! \\\\cdots  !] ㄷ<br/>[! \\\\cfrac{2 x - 3}{5} \\\\times 5 = ( - 1 ) \\\\times 5 !]<br/>[! 2 x - 3 = - 5 !]의 양변에 [!3!]을 더하면 [! \\\\cdots  !][! \\\\cdots  !] ㄱ<br/>[! 2 x - 3 + 3 = - 5 + 3 !]<br/>[! 2 x = - 2 !]의 양변을 [!2!]로 나누면 [! \\\\cdots  !][! \\\\cdots  !] ㄹ<br/>[! \\\\cfrac{2 x}{2} = \\\\cfrac{- 2}{2} !]<br/>∴ [! x = - 1 !]<br/>따라서 순서대로 나열하면 ② ㄷ, ㄱ, ㄹ이다.",},]'
+frame_correct_answer = r'[{"answer": "2", "filePath": "", "imgAlt": "", "text": "ㅇㅇㅇ"},]'
+frame_scripts = r'[{ "english": "", "translation": ""}]'
 frame_pattern = fr'(name":"{FRAME_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"translations":[\s\S]*?"value":)\[[\s\S]*?\](}}[\s\S]*?"explanations":[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?correctAnswer":[\s\S]*?"value":)\[[\s\S]*?\](}}[\s\S]*?"scripts":[\s\S]*?value":)\[[\s\S]*?\](}})'
 frame_replacement = fr'\1 {frame_translations} \2 {frame_explanations} \3 {frame_correct_answer} \4 {frame_scripts}\5'
 
 # 과목 바꾸기
-SUBJECT = '영어'
+SUBJECT = '수학'
 THEME = '중고등'
 
 subject_pattern = r'("subject":{"locked":false,"value":)[\s\S]*?(})'
@@ -175,8 +173,11 @@ OPTION_FILES_IN_WORK_FOLDER = [
     f'{WORK_FOLDER_PATH}SUIT-Bold.ttf'
 ]
 
+# 앱아이디
+APP_ID = '15283'
+
 # 압축 파일 이름
-zip_filename = f'{SAVE_FILE_PATH}test.zip'
+zip_filename = f'{SAVE_FILE_PATH}{APP_ID}.zip'
 
 # zip 파일 생성 및 파일 추가
 with zipfile.ZipFile(zip_filename, 'w') as zipf:
