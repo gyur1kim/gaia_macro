@@ -49,6 +49,11 @@ EX2_COMP_NAME = '0711_ex2 10'
 
 OP_COMP_NAME = '0719_op 86'
 
+# 과목
+SUBJECT = '영어'
+THEME = '중고등'
+MATH_INPUTTER_SUBJECT = '초등' #(초등, 중등, 고등)
+
 # 파일 경로 설정
 OP_APP_FILE_NAME = f'{WORK_FOLDER_PATH}app-{FILE_ID}.js'
 
@@ -58,8 +63,8 @@ with open(OP_APP_FILE_NAME, 'r', encoding='utf-8') as FILE:
 
 # 텍스트0 변경
 text0_value = r''
-text0_pattern = fr'("?name"?:\s?"{TEXT0_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},)'
-text0_replacement = fr'\1, "value": "{text0_value}"\2'
+text0_pattern = fr'("name":"{TEXT0_COMP_NAME}"[\s\S]*?"content":{{"subject":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"theme":[\s\S]*?"value":)[\s\S]*?(}},"value":{{[\s\S]*?false)[\s\S]*?(}},)'
+text0_replacement = fr'\1 "{SUBJECT}" \2 "{THEME}" \3, "value": "{text0_value}"\4'
 
 # 오디오0 변경
 audio0_value = ''
@@ -68,8 +73,8 @@ audio0_replacement = fr'\1, "value": "{audio0_value}"\2'
 
 # 텍스트1 변경
 text1_value = r''
-text1_pattern = fr'("?name"?:\s?"{TEXT1_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},)'
-text1_replacement = fr'\1, "value": "{text1_value}"\2'
+text1_pattern = fr'("name":"{TEXT1_COMP_NAME}"[\s\S]*?"content":{{"subject":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"theme":[\s\S]*?"value":)[\s\S]*?(}},"value":{{[\s\S]*?false)[\s\S]*?(}},)'
+text1_replacement = fr'\1 "{SUBJECT}" \2 "{THEME}" \3, "value": "{text1_value}"\4'
 
 # 이미지1 변경
 img1_filePath = ''
@@ -89,8 +94,8 @@ ex1_replacement = fr'\1, "value": "{ex1_value}"\2'
 
 # 텍스트2 변경
 text2_value = r''
-text2_pattern = fr'("?name"?:\s?"{TEXT2_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},)'
-text2_replacement = fr'\1, "value": "{text2_value}"\2'
+text2_pattern = fr'("name":"{TEXT2_COMP_NAME}"[\s\S]*?"content":{{"subject":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"theme":[\s\S]*?"value":)[\s\S]*?(}},"value":{{[\s\S]*?false)[\s\S]*?(}},)'
+text2_replacement = fr'\1 "{SUBJECT}" \2 "{THEME}" \3, "value": "{text2_value}"\4'
 
 # 이미지2 변경
 img2_filePath = ''
