@@ -5,7 +5,7 @@ import zipfile
 import shutil
 
 WORK_FOLDER_PATH = 'C:/Users/qri/Desktop/gaia_macro/'
-SAVE_FILE_PATH = 'C:/Users/qri/Downloads'
+SAVE_FILE_PATH = 'C:/Users/qri/Downloads/'
 FILE_ID = '1721484218170'
 
 # 선다형 파일 복사+붙여넣기
@@ -50,11 +50,11 @@ EX2_COMP_NAME = '0711_ex2 10'
 OP_COMP_NAME = '0719_op 86'
 
 # 파일 경로 설정
-OP_APP_FILE = f'{WORK_FOLDER_PATH}app-{FILE_ID}.js'
+OP_APP_FILE_NAME = f'{WORK_FOLDER_PATH}app-{FILE_ID}.js'
 
 # 파일 읽기
-with open(OP_APP_FILE, 'r', encoding='utf-8') as file:
-    content = file.read()
+with open(OP_APP_FILE_NAME, 'r', encoding='utf-8') as FILE:
+    OP_APP_FILE = FILE.read()
 
 # 텍스트0 변경
 text0_value = r''
@@ -103,69 +103,51 @@ box2_value = r''
 box2_pattern = fr'("?name"?:\s?"{BOX2_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?}},?)'
 box2_replacement = fr'\1, "value": "{box2_value}"\2'
 
-# # 보기박스2 변경
-# ex2_value = r''
-# ex2_pattern = r'("?name"?:\s?"0711_ex2 12"[\s\S]*?content"?:\s?{[\s\S]*?value"?:\s?{[\s\S]*?false)[\s\S]*?(},?[\s\S]*?},?)'
-# ex2_replacement = fr'\1, "value": "{ex2_value}"\2'
+# 보기박스2 변경
+ex2_value = r''
+ex2_pattern = fr'("?name"?:\s?"{EX2_COMP_NAME}"[\s\S]*?content"?:\s?{{[\s\S]*?value"?:\s?{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?}},?)'
+ex2_replacement = fr'\1, "value": "{ex2_value}"\2'
 
-# # 선지 변경
-# op_row_list = r'[{"textValue": "1[!\\sqrt{300}!]", "filePath": "", "imgAlt": ""}, {"textValue": "2", "filePath": "", "imgAlt": ""}, {"textValue": "3", "filePath": "", "imgAlt": ""}, {"textValue": "4", "filePath": "", "imgAlt": ""}, {"textValue": "5", "filePath": "", "imgAlt": ""}]'
-# op_answer = '1'
-# op_pattern = r'("?name"?:\s?"0716_op2 66"[\s\S]*?rowList"?:\s?{[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}[\s\S]*?correctAnswer"?:\s?{[\s\S]*?false)[\s\S]*?(},)'
-# op_replacement = fr'\1{op_row_list}\2, "value": {op_answer}\3'
+# 선지 변경
+op_row_list = r'[]'
+op_answer = '1'
+op_pattern = fr'("?name"?:\s?"{OP_COMP_NAME}"[\s\S]*?rowList"?:\s?{{[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}}[\s\S]*?correctAnswer"?:\s?{{[\s\S]*?false)[\s\S]*?(}},)'
+op_replacement = fr'\1{op_row_list}\2, "value": {op_answer}\3'
 
-# # frame
-# frame_translations = '[{"filePath": "","imgAlt": "","text": "여기는 해석이 옵니다.",},]'
-# frame_explanations = '[{"filePath": "","imgAlt": "","text": "여기는 해설이 옵니다.",},]'
-# frame_correct_answer = '[{"answer": "1", "filePath": "", "imgAlt": "", "text": "5"},]'
-# frame_scripts = '[{ "english": "", "translation": ""}]'
-# frame_pattern = r'(name"?:\s?"kgr_240716_frame3 57",[\s\S]*?translations"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?},[\s\S]*?explanations"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?},[\s\S]*?correctAnswer"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?},[\s\S]*?scripts"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?},)'
-# frame_replacement = fr'\1{frame_translations}\2{frame_explanations}\3{frame_correct_answer}\4{frame_scripts}\5'
+# frame
+frame_translations = r'[{"filePath": "","imgAlt": "","text": "여기는 해석이 옵니다.",},]'
+frame_explanations = r'[{"filePath": "","imgAlt": "","text": "여기는 해설이 옵니다.",},]'
+frame_correct_answer = r'[{"answer": "1", "filePath": "", "imgAlt": "", "text": "5"},]'
+frame_scripts = r'[{ "english": "", "translation": ""}]'
+frame_pattern = fr'(name"?:\s?"{FRANE_COMP_NAME}",[\s\S]*?translations"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}},[\s\S]*?explanations"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}},[\s\S]*?correctAnswer"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}},[\s\S]*?scripts"?:[\s\S]*?value"?:\s?)\[[\s\S]*?\](,?[\s\S]*?}},)'
+frame_replacement = fr'\1{frame_translations}\2{frame_explanations}\3{frame_correct_answer}\4{frame_scripts}\5'
 
-# content = re.sub(frame_pattern, frame_replacement, content, flags=re.DOTALL)
-# content = re.sub(text0_pattern, text0_replacement, content, flags=re.DOTALL)
-# content = re.sub(audio0_pattern, audio0_replacement, content, flags=re.DOTALL)
+OP_APP_FILE = re.sub(text0_pattern, text0_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(audio0_pattern, audio0_replacement, OP_APP_FILE, flags=re.DOTALL)
 
-# content = re.sub(text1_pattern, text1_replacement, content, flags=re.DOTALL)
-# content = re.sub(img1_pattern, img1_replacement, content, flags=re.DOTALL)
-# content = re.sub(box1_pattern, box1_replacement, content, flags=re.DOTALL)
-# content = re.sub(ex1_pattern, ex1_replacement, content, flags=re.DOTALL)
+OP_APP_FILE = re.sub(text1_pattern, text1_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(img1_pattern, img1_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(box1_pattern, box1_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(ex1_pattern, ex1_replacement, OP_APP_FILE, flags=re.DOTALL)
 
-# content = re.sub(text2_pattern, text2_replacement, content, flags=re.DOTALL)
-# content = re.sub(img2_pattern, img2_replacement, content, flags=re.DOTALL)
-# content = re.sub(box2_pattern, box2_replacement, content, flags=re.DOTALL)
-# content = re.sub(ex2_pattern, ex2_replacement, content, flags=re.DOTALL)
+OP_APP_FILE = re.sub(text2_pattern, text2_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(img2_pattern, img2_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(box2_pattern, box2_replacement, OP_APP_FILE, flags=re.DOTALL)
+OP_APP_FILE = re.sub(ex2_pattern, ex2_replacement, OP_APP_FILE, flags=re.DOTALL)
 
-# # 선다형
-# content = re.sub(op_pattern, op_replacement, content, flags=re.DOTALL)
+# 프레임
+OP_APP_FILE = re.sub(frame_pattern, frame_replacement, OP_APP_FILE, flags=re.DOTALL)
 
-# # 파일 저장
-# with open(app_file_js, 'w', encoding='utf-8') as file:
-#     file.write(content)
+# 선다형
+OP_APP_FILE = re.sub(op_pattern, op_replacement, OP_APP_FILE, flags=re.DOTALL)
 
-# print("파일이 성공적으로 업데이트되었습니다.")
+# 파일 저장
+with open(OP_APP_FILE_NAME, 'w', encoding='utf-8') as FILE:
+    FILE.write(OP_APP_FILE)
 
-# # 여러 JS 파일을 ZIP 파일로 압축
-# js_files = [
-#     f"{ORIGIN_FILE_PATH}app-{FILE_ID}.js",
-#     f"{ORIGIN_FILE_PATH}GlobalConfig-{FILE_ID}.js",
-#     f"{ORIGIN_FILE_PATH}import-libraries-{FILE_ID}.js",
-#     f"{ORIGIN_FILE_PATH}7818index.html",
-#     f"{ORIGIN_FILE_PATH}runner-{FILE_ID}.js",
-#     f"{ORIGIN_FILE_PATH}SUIT-Bold.ttf"
-# ]
+print("파일이 성공적으로 업데이트되었습니다.")
 
-# # 압축 파일 이름
-# zip_filename = f'{ORIGIN_FILE_PATH}7818.zip'
-
-# # zip 파일 생성 및 파일 추가
-# with zipfile.ZipFile(zip_filename, 'w') as zipf:
-#     for file in js_files:
-#         zipf.write(file, arcname=os.path.basename(file))
-
-# print(f"{zip_filename} 파일이 성공적으로 생성되었습니다.")
-
-# 선다형 파일 삭제하기
+# 여러 JS 파일을 ZIP 파일로 압축
 OPTION_FILES_IN_WORK_FOLDER = [
     f'{WORK_FOLDER_PATH}app-{FILE_ID}.js',
     f'{WORK_FOLDER_PATH}GlobalConfig-{FILE_ID}.js',
@@ -175,6 +157,17 @@ OPTION_FILES_IN_WORK_FOLDER = [
     f'{WORK_FOLDER_PATH}SUIT-Bold.ttf'
 ]
 
+# 압축 파일 이름
+zip_filename = f'{SAVE_FILE_PATH}test.zip'
+
+# zip 파일 생성 및 파일 추가
+with zipfile.ZipFile(zip_filename, 'w') as zipf:
+    for FILE in OPTION_FILES_IN_WORK_FOLDER:
+        zipf.write(FILE, arcname=os.path.basename(FILE))
+
+print(f"{zip_filename} 파일이 성공적으로 생성되었습니다.")
+
+# 선다형 파일 삭제하기
 for OPTION_FILE in OPTION_FILES_IN_WORK_FOLDER:
     try:
         # 파일 삭제
