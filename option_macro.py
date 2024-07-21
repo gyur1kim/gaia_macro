@@ -261,67 +261,53 @@ def set_option_template(row_data, app_name, subject):
         OP_APP_FILE = FILE.read()
 
     # 텍스트0 변경
-    # 수식 넣을 때 \ => \\\\로 넣어줘야됨 ;;
-    # text0_value = r''
     text0_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT0])
     text0_pattern = fr'("name":"{TEXT0_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
     text0_replacement = fr'\1, "value": "{text0_value}"\2'
 
     # 오디오0 변경
-    # audio_value = ''
     audio_value = comp_map[APP][ID] + '/' + comp_map[PROBLEM_COMPONENT].get('음원1','') if comp_map[PROBLEM_COMPONENT].get('음원1','') != '' else ''
     audio_pattern = fr'("name":"{AUDIO_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},)'
     audio_replacement = fr'\1, "value": "{audio_value}"\2'
 
     # 텍스트1 변경
-    # text1_value = r''
     text1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT1])
     text1_pattern = fr'("name":"{TEXT1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
     text1_replacement = fr'\1, "value": "{text1_value}"\2'
 
     # 이미지1 변경
-    # img1_filePath = '15027/20514768_000.png'
-    # img1_imgAlt = ''
     img1_filePath = comp_map[PROBLEM_COMPONENT][IMAGE1]
     img1_imgAlt = comp_map[PROBLEM_COMPONENT][IMAGE1_ALT]
     img1_pattern = fr'("name":"{IMG1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt":{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?)'
     img1_replacement = fr'\1, "filePath": "{img1_filePath}" \2, "imgAlt": "{img1_imgAlt}"\3'
 
     # 박스1 변경
-    # box1_value = r''
     box1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][BOX1])
     box1_pattern = fr'("name":"{BOX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
     box1_replacement = fr'\1, "value": "{box1_value}"\2'
 
     # 보기박스1 변경
-    # ex1_value = r''
     ex1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][VIEW1])
-    print(f'보기1 결과물: {ex1_value}\n')
     ex1_pattern = fr'("name":"{EX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
     ex1_replacement = fr'\1, "value": "{ex1_value}"\2'
 
     # 텍스트2 변경
-    # text2_value = r''
     text2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT2])
     text2_pattern = fr'("name":"{TEXT2_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
     text2_replacement = fr'\1, "value": "{text2_value}"\2'
 
     # 이미지2 변경
-    # img2_filePath = ''
-    # img2_imgAlt = ''
     img2_filePath = comp_map[PROBLEM_COMPONENT][IMAGE2]
     img2_imgAlt = comp_map[PROBLEM_COMPONENT][IMAGE2_ALT]
     img2_pattern = fr'("name":"{IMG2_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt":{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?)'
     img2_replacement = fr'\1, "filePath": "{img2_filePath}" \2, "imgAlt": "{img2_imgAlt}"\3'
 
     # 박스2 변경
-    # box2_value = r''
     box2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][BOX2])
     box2_pattern = fr'("name":"{BOX2_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
     box2_replacement = fr'\1, "value": "{box2_value}"\2'
 
     # 보기박스2 변경
-    # ex2_value = r''
     ex2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][VIEW2])
     ex2_pattern = fr'("name":"{EX2_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
     ex2_replacement = fr'\1, "value": "{ex2_value}"\2'
@@ -333,13 +319,11 @@ def set_option_template(row_data, app_name, subject):
         OP_TYPE = 'image'
 
     if "선" in comp_map[UX]:
-        # op_row_list = r'[{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""}]'
-        # op_answer = '2'
         op_row_list = convert_backslash(choice_data_to_json(comp_map))
         op_answer = comp_map[ANSWER_COMPONENT][ANSWER1].replace(' ', '')
         op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
         op_replacement = fr'\1 "{OP_TYPE}" \2 {op_row_list} \3, "value": "{op_answer}" \4'
-    # 헤더형은 나중에... 찾아서 바꿀게
+    # 헤더형은 나중에... 가이아 제대로 되면 적용할겡...
     # elif "헤" in comp_map[UX]:
         # op_row_list = r'[{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""}]'
         # op_row_list = choice_header_data_to_json(comp_map)
@@ -348,11 +332,8 @@ def set_option_template(row_data, app_name, subject):
         # op_r
 
     # frame 변경
-    # frame_correct_answer = r'[{"answer": "", "filePath": "", "imgAlt": "", "text": ""},]'
-    # frame_explanations = r'[{"filePath": "","imgAlt": "","text": "",},]'
     frame_correct_answer = convert_backslash(multi_frame_to_json(comp_map))
     frame_explanations = convert_backslash(explanations_to_json(comp_map))
-    
     if SUBJECT == '영어':
         frame_scripts = soundtrack_script_to_json(comp_map)
         frame_translations = translation_to_json(comp_map)
