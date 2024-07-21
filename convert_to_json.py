@@ -1,8 +1,8 @@
 from constant_name import *
 
 def convert_text(text):
-    text = text.replace(r"\\", r"\\\\")
-    # text = text.replace("\"", "\\\"")
+    text = text.replace("\\", "\\\\")
+    text = text.replace("\"", "\\\"")
     return text
 
 # frame 속성에 넣을 값을 json으로 변환

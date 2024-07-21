@@ -226,6 +226,10 @@ def set_excel_to_component_eng(row_data):
 
     return comp_map
 
+def convert_backslash(text):
+    text = re.sub(r'\\{1,2}', r'\\\\\\\\', text)
+    return text
+
 def set_option_template(row_data, app_name, subject):
     if subject == "수학":
         comp_map = set_excel_to_component_math_first(row_data)
@@ -259,7 +263,7 @@ def set_option_template(row_data, app_name, subject):
     # 텍스트0 변경
     # 수식 넣을 때 \ => \\\\로 넣어줘야됨 ;;
     # text0_value = r''
-    text0_value = comp_map[PROBLEM_COMPONENT][TEXT0]
+    text0_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT0])
     text0_pattern = fr'("name":"{TEXT0_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
     text0_replacement = fr'\1, "value": "{text0_value}"\2'
 
@@ -271,7 +275,7 @@ def set_option_template(row_data, app_name, subject):
 
     # 텍스트1 변경
     # text1_value = r''
-    text1_value = comp_map[PROBLEM_COMPONENT][TEXT1]
+    text1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT1])
     text1_pattern = fr'("name":"{TEXT1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
     text1_replacement = fr'\1, "value": "{text1_value}"\2'
 
@@ -285,19 +289,20 @@ def set_option_template(row_data, app_name, subject):
 
     # 박스1 변경
     # box1_value = r''
-    box1_value = comp_map[PROBLEM_COMPONENT][BOX1]
+    box1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][BOX1])
     box1_pattern = fr'("name":"{BOX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
     box1_replacement = fr'\1, "value": "{box1_value}"\2'
 
     # 보기박스1 변경
     # ex1_value = r''
-    ex1_value = comp_map[PROBLEM_COMPONENT][VIEW1]
+    ex1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][VIEW1])
+    print(f'보기1 결과물: {ex1_value}\n')
     ex1_pattern = fr'("name":"{EX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
     ex1_replacement = fr'\1, "value": "{ex1_value}"\2'
 
     # 텍스트2 변경
     # text2_value = r''
-    text2_value = comp_map[PROBLEM_COMPONENT][TEXT2]
+    text2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT2])
     text2_pattern = fr'("name":"{TEXT2_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
     text2_replacement = fr'\1, "value": "{text2_value}"\2'
 
@@ -311,13 +316,13 @@ def set_option_template(row_data, app_name, subject):
 
     # 박스2 변경
     # box2_value = r''
-    box2_value = comp_map[PROBLEM_COMPONENT][BOX2]
+    box2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][BOX2])
     box2_pattern = fr'("name":"{BOX2_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
     box2_replacement = fr'\1, "value": "{box2_value}"\2'
 
     # 보기박스2 변경
     # ex2_value = r''
-    ex2_value = comp_map[PROBLEM_COMPONENT][VIEW2]
+    ex2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][VIEW2])
     ex2_pattern = fr'("name":"{EX2_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
     ex2_replacement = fr'\1, "value": "{ex2_value}"\2'
 
@@ -330,7 +335,7 @@ def set_option_template(row_data, app_name, subject):
     if "선" in comp_map[UX]:
         # op_row_list = r'[{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""}]'
         # op_answer = '2'
-        op_row_list = choice_data_to_json(comp_map)
+        op_row_list = convert_backslash(choice_data_to_json(comp_map))
         op_answer = comp_map[ANSWER_COMPONENT][ANSWER1].replace(' ', '')
         op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
         op_replacement = fr'\1 "{OP_TYPE}" \2 {op_row_list} \3, "value": "{op_answer}" \4'
@@ -345,8 +350,9 @@ def set_option_template(row_data, app_name, subject):
     # frame 변경
     # frame_correct_answer = r'[{"answer": "", "filePath": "", "imgAlt": "", "text": ""},]'
     # frame_explanations = r'[{"filePath": "","imgAlt": "","text": "",},]'
-    frame_correct_answer = multi_frame_to_json(comp_map)
-    frame_explanations = explanations_to_json(comp_map)
+    frame_correct_answer = convert_backslash(multi_frame_to_json(comp_map))
+    frame_explanations = convert_backslash(explanations_to_json(comp_map))
+    
     if SUBJECT == '영어':
         frame_scripts = soundtrack_script_to_json(comp_map)
         frame_translations = translation_to_json(comp_map)
