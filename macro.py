@@ -101,6 +101,6 @@ def init():
 if __name__ == "__main__":
     type_map = init()
     # 엑셀 데이터 불러오기
-    excel_map, row = read_excel_data("엑셀_매크로_양식_업데이트.xlsx")
+    excel_map, row = read_excel_data("엑셀_매크로_양식_업데이트_테스트.xlsx")
     # 엑셀 데이터로 템플릿에 값 넣기
     set_template_and_props(excel_map, row, type_map)

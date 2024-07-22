@@ -9,32 +9,33 @@ from constant_name import *
 from convert_to_json import choice_data_to_json, explanations_to_json, multi_frame_to_json, soundtrack_script_to_json, translation_to_json
 # ================ CONST ==============
 # 경로 및 ID
-WORK_FOLDER_PATH = 'C:/Users/qri/Desktop/gaia_macro/'
-SAVE_FILE_PATH = 'C:/Users/qri/Downloads/'
+PC_NAME = 'GYURI'
+MACRO_FOLDER_PATH = f'C:/Users/{PC_NAME}/git repo/miraen/gaia_macro/'
+DOWNLOAD_FOLDER_PATH = f'C:/Users/{PC_NAME}/Downloads/'
 FILE_ID = '1721484218170'
 
 # 선다형 폴더 내 파일들(원본)
 OPTION_FILES_ORIGIN = [
-    f'{WORK_FOLDER_PATH}선다형/app-{FILE_ID}.js',
-    f'{WORK_FOLDER_PATH}선다형/GlobalConfig-{FILE_ID}.js',
-    f'{WORK_FOLDER_PATH}선다형/import-libraries-{FILE_ID}.js',
-    f'{WORK_FOLDER_PATH}선다형/index.html',
-    f'{WORK_FOLDER_PATH}선다형/runner-{FILE_ID}.js',
-    f'{WORK_FOLDER_PATH}선다형/SUIT-Bold.ttf',
+    f'{MACRO_FOLDER_PATH}선다형/app-{FILE_ID}.js',
+    f'{MACRO_FOLDER_PATH}선다형/GlobalConfig-{FILE_ID}.js',
+    f'{MACRO_FOLDER_PATH}선다형/import-libraries-{FILE_ID}.js',
+    f'{MACRO_FOLDER_PATH}선다형/index.html',
+    f'{MACRO_FOLDER_PATH}선다형/runner-{FILE_ID}.js',
+    f'{MACRO_FOLDER_PATH}선다형/SUIT-Bold.ttf',
 ]
 
 # WORK PATH의 파일들(복사본)
 OPTION_FILES_IN_WORK_FOLDER = [
-    f'{WORK_FOLDER_PATH}app-{FILE_ID}.js',
-    f'{WORK_FOLDER_PATH}GlobalConfig-{FILE_ID}.js',
-    f'{WORK_FOLDER_PATH}import-libraries-{FILE_ID}.js',
-    f'{WORK_FOLDER_PATH}index.html',
-    f'{WORK_FOLDER_PATH}runner-{FILE_ID}.js',
-    f'{WORK_FOLDER_PATH}SUIT-Bold.ttf'
+    f'{MACRO_FOLDER_PATH}app-{FILE_ID}.js',
+    f'{MACRO_FOLDER_PATH}GlobalConfig-{FILE_ID}.js',
+    f'{MACRO_FOLDER_PATH}import-libraries-{FILE_ID}.js',
+    f'{MACRO_FOLDER_PATH}index.html',
+    f'{MACRO_FOLDER_PATH}runner-{FILE_ID}.js',
+    f'{MACRO_FOLDER_PATH}SUIT-Bold.ttf'
 ]
 
 # 수정해야하는 파일 이름
-OP_APP_FILE_NAME = f'{WORK_FOLDER_PATH}app-{FILE_ID}.js'
+OP_APP_FILE_NAME = f'{MACRO_FOLDER_PATH}app-{FILE_ID}.js'
 
 # 가이아 컴포넌트명
 FRAME_COMP_NAME = 'kgr_240719_frame2 65'
@@ -236,7 +237,7 @@ def set_option_template(row_data, app_name, subject):
     elif subject == "영어":
         comp_map = set_excel_to_component_eng(row_data)
 
-    APP_ID = app_name
+    APP_NAME = app_name
     SUBJECT = subject
     if "초" in comp_map[UX]:
         THEME = '초등'
@@ -245,9 +246,9 @@ def set_option_template(row_data, app_name, subject):
 
     # 선다형 폴더에 필요한 파일들 WORK_PATH로 옮기기
     for OPTION_FILE in OPTION_FILES_ORIGIN:
-        destination_file = os.path.join(WORK_FOLDER_PATH, os.path.basename(OPTION_FILE))
+        destination_file = os.path.join(MACRO_FOLDER_PATH, os.path.basename(OPTION_FILE))
         try:
-            shutil.copy2(OPTION_FILE, WORK_FOLDER_PATH)
+            shutil.copy2(OPTION_FILE, MACRO_FOLDER_PATH)
             print(f"파일이 성공적으로 복사되었습니다: {destination_file}")
         except FileNotFoundError:
             print(f"원본 파일을 찾을 수 없습니다: {OPTION_FILE}")
@@ -263,54 +264,54 @@ def set_option_template(row_data, app_name, subject):
     # 텍스트0 변경
     text0_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT0])
     text0_pattern = fr'("name":"{TEXT0_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
-    text0_replacement = fr'\1, "value": "{text0_value}"\2'
+    text0_replacement = fr'\1,"value":"{text0_value}"\2'
 
     # 오디오0 변경
     audio_value = comp_map[APP][ID] + '/' + comp_map[PROBLEM_COMPONENT].get('음원1','') if comp_map[PROBLEM_COMPONENT].get('음원1','') != '' else ''
     audio_pattern = fr'("name":"{AUDIO_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},)'
-    audio_replacement = fr'\1, "value": "{audio_value}"\2'
+    audio_replacement = fr'\1,"value":"{audio_value}"\2'
 
     # 텍스트1 변경
     text1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT1])
     text1_pattern = fr'("name":"{TEXT1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
-    text1_replacement = fr'\1, "value": "{text1_value}"\2'
+    text1_replacement = fr'\1,"value":"{text1_value}"\2'
 
     # 이미지1 변경
     img1_filePath = comp_map[PROBLEM_COMPONENT][IMAGE1]
     img1_imgAlt = comp_map[PROBLEM_COMPONENT][IMAGE1_ALT]
     img1_pattern = fr'("name":"{IMG1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt":{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?)'
-    img1_replacement = fr'\1, "filePath": "{img1_filePath}" \2, "imgAlt": "{img1_imgAlt}"\3'
+    img1_replacement = fr'\1,"value":"{img1_filePath}"\2,"value":"{img1_imgAlt}"\3'
 
     # 박스1 변경
     box1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][BOX1])
     box1_pattern = fr'("name":"{BOX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
-    box1_replacement = fr'\1, "value": "{box1_value}"\2'
+    box1_replacement = fr'\1,"value":"{box1_value}"\2'
 
     # 보기박스1 변경
     ex1_value = convert_backslash(comp_map[PROBLEM_COMPONENT][VIEW1])
     ex1_pattern = fr'("name":"{EX1_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
-    ex1_replacement = fr'\1, "value": "{ex1_value}"\2'
+    ex1_replacement = fr'\1,"value":"{ex1_value}"\2'
 
     # 텍스트2 변경
     text2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][TEXT2])
     text2_pattern = fr'("name":"{TEXT2_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"value":{{"locked":false)[\s\S]*?(}},)'
-    text2_replacement = fr'\1, "value": "{text2_value}"\2'
+    text2_replacement = fr'\1,"value":"{text2_value}"\2'
 
     # 이미지2 변경
     img2_filePath = comp_map[PROBLEM_COMPONENT][IMAGE2]
     img2_imgAlt = comp_map[PROBLEM_COMPONENT][IMAGE2_ALT]
     img2_pattern = fr'("name":"{IMG2_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"filePath":{{[\s\S]*?false)[\s\S]*?(}},[\s\S]*?imgAlt":{{[\s\S]*?false)[\s\S]*?(}},?[\s\S]*?)'
-    img2_replacement = fr'\1, "filePath": "{img2_filePath}" \2, "imgAlt": "{img2_imgAlt}"\3'
+    img2_replacement = fr'\1,"value":"{img2_filePath}"\2,"value":"{img2_imgAlt}"\3'
 
     # 박스2 변경
     box2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][BOX2])
     box2_pattern = fr'("name":"{BOX2_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
-    box2_replacement = fr'\1, "value": "{box2_value}"\2'
+    box2_replacement = fr'\1,"value":"{box2_value}"\2'
 
     # 보기박스2 변경
     ex2_value = convert_backslash(comp_map[PROBLEM_COMPONENT][VIEW2])
     ex2_pattern = fr'("name":"{EX2_COMP_NAME}"[\s\S]*?"content":{{[\s\S]*?"value":{{"locked":false)[\s\S]*?(}})'
-    ex2_replacement = fr'\1, "value": "{ex2_value}"\2'
+    ex2_replacement = fr'\1,"value":"{ex2_value}"\2'
 
     # 선지 변경
     if comp_map[CHOICE_COMPONENT][TEXT1] != '':
@@ -322,7 +323,7 @@ def set_option_template(row_data, app_name, subject):
         op_row_list = convert_backslash(choice_data_to_json(comp_map))
         op_answer = comp_map[ANSWER_COMPONENT][ANSWER1].replace(' ', '')
         op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
-        op_replacement = fr'\1 "{OP_TYPE}" \2 {op_row_list} \3, "value": "{op_answer}" \4'
+        op_replacement = fr'\1"{OP_TYPE}"\2{op_row_list}\3,"value":"{op_answer}"\4'
     # 헤더형은 나중에... 가이아 제대로 되면 적용할겡...
     # elif "헤" in comp_map[UX]:
         # op_row_list = r'[{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""}]'
@@ -341,7 +342,7 @@ def set_option_template(row_data, app_name, subject):
         frame_scripts = r'[{ "english": "", "translation": ""}]'
         frame_translations = r'[{"filePath": "","imgAlt": "","text": "",},]'
     frame_pattern = fr'(name":"{FRAME_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"translations":[\s\S]*?"value":)\[[\s\S]*?\](}}[\s\S]*?"explanations":[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?correctAnswer":[\s\S]*?"value":)\[[\s\S]*?\](}}[\s\S]*?"scripts":[\s\S]*?value":)\[[\s\S]*?\](}})'
-    frame_replacement = fr'\1 {frame_translations} \2 {frame_explanations} \3 {frame_correct_answer} \4 {frame_scripts}\5'
+    frame_replacement = fr'\1{frame_translations}\2{frame_explanations}\3{frame_correct_answer}\4{frame_scripts}\5'
 
     # 과목 바꾸기
     subject_pattern = r'("subject":{"locked":false,"value":)[\s\S]*?(})'
@@ -378,14 +379,14 @@ def set_option_template(row_data, app_name, subject):
     print("파일이 성공적으로 업데이트되었습니다.")
 
     # 압축 파일 이름
-    zip_filename = f'{SAVE_FILE_PATH}{APP_ID}.zip'
+    zip_filename = f'{DOWNLOAD_FOLDER_PATH}{APP_NAME}.zip'
 
     # zip 파일 생성 및 파일 추가
     with zipfile.ZipFile(zip_filename, 'w') as zipf:
         for FILE in OPTION_FILES_IN_WORK_FOLDER:
             zipf.write(FILE, arcname=os.path.basename(FILE))
 
-    print(f"문제 {APP_ID} 생성 성공")
+    print(f"문제 {APP_NAME} 생성 성공")
 
     # WORK_PATH에 복사한 파일들 삭제
     for OPTION_FILE in OPTION_FILES_IN_WORK_FOLDER:
