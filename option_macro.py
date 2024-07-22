@@ -6,52 +6,12 @@ import shutil
 from collections import defaultdict
 
 from constant_name import *
-from convert_to_json import choice_data_to_json, explanations_to_json, multi_frame_to_json, soundtrack_script_to_json, translation_to_json
-# ================ CONST ==============
-# 경로 및 ID
+from convert_to_json import choice_data_to_json, choice_header_data_to_json, explanations_to_json, multi_frame_to_json, soundtrack_script_to_json, translation_to_json
+
+# 경로 관리
 PC_NAME = 'GYURI'
 MACRO_FOLDER_PATH = f'C:/Users/{PC_NAME}/git repo/miraen/gaia_macro/'
 DOWNLOAD_FOLDER_PATH = f'C:/Users/{PC_NAME}/Downloads/'
-FILE_ID = '1721484218170'
-
-# 선다형 폴더 내 파일들(원본)
-OPTION_FILES_ORIGIN = [
-    f'{MACRO_FOLDER_PATH}선다형/app-{FILE_ID}.js',
-    f'{MACRO_FOLDER_PATH}선다형/GlobalConfig-{FILE_ID}.js',
-    f'{MACRO_FOLDER_PATH}선다형/import-libraries-{FILE_ID}.js',
-    f'{MACRO_FOLDER_PATH}선다형/index.html',
-    f'{MACRO_FOLDER_PATH}선다형/runner-{FILE_ID}.js',
-    f'{MACRO_FOLDER_PATH}선다형/SUIT-Bold.ttf',
-]
-
-# WORK PATH의 파일들(복사본)
-OPTION_FILES_IN_WORK_FOLDER = [
-    f'{MACRO_FOLDER_PATH}app-{FILE_ID}.js',
-    f'{MACRO_FOLDER_PATH}GlobalConfig-{FILE_ID}.js',
-    f'{MACRO_FOLDER_PATH}import-libraries-{FILE_ID}.js',
-    f'{MACRO_FOLDER_PATH}index.html',
-    f'{MACRO_FOLDER_PATH}runner-{FILE_ID}.js',
-    f'{MACRO_FOLDER_PATH}SUIT-Bold.ttf'
-]
-
-# 수정해야하는 파일 이름
-OP_APP_FILE_NAME = f'{MACRO_FOLDER_PATH}app-{FILE_ID}.js'
-
-# 가이아 컴포넌트명
-FRAME_COMP_NAME = 'kgr_240719_frame2 65'
-TEXT0_COMP_NAME = '0711_text1 59'
-AUDIO_COMP_NAME = 'kgr_240716_audio3 69'
-TEXT1_COMP_NAME = '0711_text1 60'
-IMG1_COMP_NAME = 'kgr_240716_img2 63'
-BOX1_COMP_NAME = '0711_box1 5'
-EX1_COMP_NAME = '0711_ex2 9'
-TEXT2_COMP_NAME = '0711_text1 61'
-IMG2_COMP_NAME = 'kgr_240716_img2 64'
-BOX2_COMP_NAME = '0711_box1 6'
-EX2_COMP_NAME = '0711_ex2 10'
-
-OP_COMP_NAME = '0719_op 86'
-# ======================================
 
 # 빈 데이터 검사
 def check_empty_data(data):
@@ -237,6 +197,72 @@ def set_option_template(row_data, app_name, subject):
     elif subject == "영어":
         comp_map = set_excel_to_component_eng(row_data)
 
+
+    if "선" in comp_map[UX]:
+        # 선다형 폴더 내 파일들(원본)
+        FILE_ID = '1721484218170'
+        OPTION_FILES_ORIGIN = [
+            f'{MACRO_FOLDER_PATH}선다형/app-{FILE_ID}.js',
+            f'{MACRO_FOLDER_PATH}선다형/GlobalConfig-{FILE_ID}.js',
+            f'{MACRO_FOLDER_PATH}선다형/import-libraries-{FILE_ID}.js',
+            f'{MACRO_FOLDER_PATH}선다형/index.html',
+            f'{MACRO_FOLDER_PATH}선다형/runner-{FILE_ID}.js',
+            f'{MACRO_FOLDER_PATH}선다형/SUIT-Bold.ttf',
+            f'{MACRO_FOLDER_PATH}선다형/MathJax_Main-Regular.ttf'
+        ]
+        # 가이아 컴포넌트명
+        FRAME_COMP_NAME = 'kgr_240719_frame2 65'
+        TEXT0_COMP_NAME = '0711_text1 59'
+        AUDIO_COMP_NAME = 'kgr_240716_audio3 69'
+        TEXT1_COMP_NAME = '0711_text1 60'
+        IMG1_COMP_NAME = 'kgr_240716_img2 63'
+        BOX1_COMP_NAME = '0711_box1 5'
+        EX1_COMP_NAME = '0711_ex2 9'
+        TEXT2_COMP_NAME = '0711_text1 61'
+        IMG2_COMP_NAME = 'kgr_240716_img2 64'
+        BOX2_COMP_NAME = '0711_box1 6'
+        EX2_COMP_NAME = '0711_ex2 10'
+        OP_COMP_NAME = '0719_op 86'
+    elif "헤" in comp_map[UX]:
+        # 헤더형 폴더 내 파일들(원본)
+        FILE_ID = '1721622473009'
+        OPTION_FILES_ORIGIN = [
+            f'{MACRO_FOLDER_PATH}헤더형/app-{FILE_ID}.js',
+            f'{MACRO_FOLDER_PATH}헤더형/GlobalConfig-{FILE_ID}.js',
+            f'{MACRO_FOLDER_PATH}헤더형/import-libraries-{FILE_ID}.js',
+            f'{MACRO_FOLDER_PATH}헤더형/index.html',
+            f'{MACRO_FOLDER_PATH}헤더형/runner-{FILE_ID}.js',
+            f'{MACRO_FOLDER_PATH}헤더형/SUIT-Bold.ttf',
+            f'{MACRO_FOLDER_PATH}헤더형/MathJax_Main-Regular.ttf'
+        ]
+        # 가이아 컴포넌트명
+        FRAME_COMP_NAME = 'kgr_240719_frame2 55'
+        TEXT0_COMP_NAME = '0711_text1 62'
+        AUDIO_COMP_NAME = 'kgr_240716_audio3 66'
+        TEXT1_COMP_NAME = '0711_text1 63'
+        IMG1_COMP_NAME = 'kgr_240716_img2 67'
+        BOX1_COMP_NAME = '0711_box1 13'
+        EX1_COMP_NAME = '0711_ex2 11'
+        TEXT2_COMP_NAME = '0711_text1 64'
+        IMG2_COMP_NAME = 'kgr_240716_img2 68'
+        BOX2_COMP_NAME = '0711_box1 6'
+        EX2_COMP_NAME = '0711_ex2 12'
+        OP_COMP_NAME = '0719_ophead 64'
+
+    # WORK PATH의 파일들(복사본)
+    OPTION_FILES_IN_WORK_FOLDER = [
+        f'{MACRO_FOLDER_PATH}app-{FILE_ID}.js',
+        f'{MACRO_FOLDER_PATH}GlobalConfig-{FILE_ID}.js',
+        f'{MACRO_FOLDER_PATH}import-libraries-{FILE_ID}.js',
+        f'{MACRO_FOLDER_PATH}index.html',
+        f'{MACRO_FOLDER_PATH}runner-{FILE_ID}.js',
+        f'{MACRO_FOLDER_PATH}SUIT-Bold.ttf'
+        f'{MACRO_FOLDER_PATH}MathJax_Main-Regular.ttf'
+    ]
+
+    # 수정해야하는 파일 이름
+    OP_APP_FILE_NAME = f'{MACRO_FOLDER_PATH}app-{FILE_ID}.js'
+
     APP_NAME = app_name
     SUBJECT = subject
     if "초" in comp_map[UX]:
@@ -318,20 +344,16 @@ def set_option_template(row_data, app_name, subject):
         OP_TYPE = 'text'
     else:
         OP_TYPE = 'image'
-
+    op_answer = comp_map[ANSWER_COMPONENT][ANSWER1].replace(' ', '')
     if "선" in comp_map[UX]:
         op_row_list = convert_backslash(choice_data_to_json(comp_map))
-        op_answer = comp_map[ANSWER_COMPONENT][ANSWER1].replace(' ', '')
         op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
         op_replacement = fr'\1"{OP_TYPE}"\2{op_row_list}\3,"value":"{op_answer}"\4'
-    # 헤더형은 나중에... 가이아 제대로 되면 적용할겡...
-    # elif "헤" in comp_map[UX]:
-        # op_row_list = r'[{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""},{"textValue":"","filePath":"","imgAlt":""}]'
-        # op_row_list = choice_header_data_to_json(comp_map)
-        # op_answer = '2'
-        # op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
-        # op_r
-
+    elif "헤" in comp_map[UX]:
+        op_row_list = convert_backslash(choice_header_data_to_json(comp_map))
+        op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},"className"[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
+        op_replacement = fr'\1"{OP_TYPE}"\2{op_row_list}\3,"value":"{op_answer}"\4'
+        
     # frame 변경
     frame_correct_answer = convert_backslash(multi_frame_to_json(comp_map))
     frame_explanations = convert_backslash(explanations_to_json(comp_map))
