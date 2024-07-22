@@ -197,7 +197,6 @@ def set_option_template(row_data, app_name, subject):
     elif subject == "영어":
         comp_map = set_excel_to_component_eng(row_data)
 
-
     if "선" in comp_map[UX]:
         # 선다형 폴더 내 파일들(원본)
         FILE_ID = '1721484218170'
@@ -208,7 +207,7 @@ def set_option_template(row_data, app_name, subject):
             f'{MACRO_FOLDER_PATH}선다형/index.html',
             f'{MACRO_FOLDER_PATH}선다형/runner-{FILE_ID}.js',
             f'{MACRO_FOLDER_PATH}선다형/SUIT-Bold.ttf',
-            f'{MACRO_FOLDER_PATH}선다형/MathJax_Main-Regular.ttf'
+            f'{MACRO_FOLDER_PATH}선다형/MathJax_Main-Regular.ttf',
         ]
         # 가이아 컴포넌트명
         FRAME_COMP_NAME = 'kgr_240719_frame2 65'
@@ -256,8 +255,8 @@ def set_option_template(row_data, app_name, subject):
         f'{MACRO_FOLDER_PATH}import-libraries-{FILE_ID}.js',
         f'{MACRO_FOLDER_PATH}index.html',
         f'{MACRO_FOLDER_PATH}runner-{FILE_ID}.js',
-        f'{MACRO_FOLDER_PATH}SUIT-Bold.ttf'
-        f'{MACRO_FOLDER_PATH}MathJax_Main-Regular.ttf'
+        f'{MACRO_FOLDER_PATH}SUIT-Bold.ttf',
+        f'{MACRO_FOLDER_PATH}MathJax_Main-Regular.ttf',
     ]
 
     # 수정해야하는 파일 이름
@@ -351,7 +350,8 @@ def set_option_template(row_data, app_name, subject):
         op_replacement = fr'\1"{OP_TYPE}"\2{op_row_list}\3,"value":"{op_answer}"\4'
     elif "헤" in comp_map[UX]:
         op_row_list = convert_backslash(choice_header_data_to_json(comp_map))
-        op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)\[[\s\S]*?\](}},"className"[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
+        print('헤더형 rowList', op_row_list)
+        op_pattern = fr'("name":"{OP_COMP_NAME}"[\s\S]*?"content":[\s\S]*?"optionType":[\s\S]*?"value":)[\s\S]*?(}},[\s\S]*?"rowList":{{[\s\S]*?"value":)[\s\S]*?(}},"className"[\s\S]*?"correctAnswer":{{[\s\S]*?false)[\s\S]*?(}},)'
         op_replacement = fr'\1"{OP_TYPE}"\2{op_row_list}\3,"value":"{op_answer}"\4'
         
     # frame 변경
